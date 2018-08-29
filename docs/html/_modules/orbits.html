@@ -64,11 +64,11 @@
 <span class="sd">    Usage:</span>
 
 <span class="sd">    &gt;&gt;&gt; from sparsepermutation import SparsePermutation</span>
+<span class="sd">    &gt;&gt;&gt; from orbits import compute_orbit_partition</span>
 <span class="sd">    &gt;&gt;&gt; p1 = SparsePermutation([1, 0, 2, 3, 5, 4, 6, 7, 8, 9])  # (0 1)(4 5)</span>
 <span class="sd">    &gt;&gt;&gt; p2 = SparsePermutation([0, 1, 2, 3, 4, 5, 6, 7, 9, 8])  # (8 9)</span>
 <span class="sd">    &gt;&gt;&gt; p3 = SparsePermutation([0, 8, 2, 3, 4, 5, 6, 7, 1, 9])  # (1 8)</span>
 <span class="sd">    &gt;&gt;&gt; orbits = compute_orbit_partition([p1, p2, p3], 10)</span>
-<span class="sd">    &gt;&gt;&gt; print(orbits)</span>
 <span class="sd">    &gt;&gt;&gt; assert orbits == [0, 0, 2, 3, 4, 4, 6, 7, 0, 0]</span>
 
 <span class="sd">    :param S: A bunch of generators for a permutation group</span>
