@@ -1,0 +1,176 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>partitionstability &#8212; Partition stability b documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for partitionstability</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Implementation of Algorithms 1 and 4 of [Ball2018]_</span>
+
+<span class="sd">.. moduleauthor:: Fabian Ball &lt;fabian.ball@kit.edu&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">orbits</span> <span class="k">import</span> <span class="n">compute_orbit_partition</span>
+
+
+<div class="viewcode-block" id="test_stability"><a class="viewcode-back" href="../content.html#partitionstability.test_stability">[docs]</a><span class="k">def</span> <span class="nf">test_stability</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test partition stability.</span>
+
+<span class="sd">    Usage:</span>
+
+<span class="sd">    &gt;&gt;&gt; from sparsepermutation import SparsePermutation</span>
+<span class="sd">    &gt;&gt;&gt; p1 = SparsePermutation([1, 0, 2, 3, 5, 4, 6, 7, 8, 9])  # (0 1)(4 5)</span>
+<span class="sd">    &gt;&gt;&gt; p2 = SparsePermutation([0, 1, 2, 3, 4, 5, 6, 7, 9, 8])  # (8 9)</span>
+<span class="sd">    &gt;&gt;&gt; p3 = SparsePermutation([0, 8, 2, 3, 4, 5, 6, 7, 1, 9])  # (1 8)</span>
+<span class="sd">    &gt;&gt;&gt; S = [p1, p2, p3]</span>
+<span class="sd">    &gt;&gt;&gt; P = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</span>
+<span class="sd">    &gt;&gt;&gt; assert test_stability(P, S) == True</span>
+
+<span class="sd">    :param P: A partition in an array-like representation, clusters are identified by cluster ids</span>
+<span class="sd">    :type P: list | tuple</span>
+<span class="sd">    :param S: A set of generators for a permutation group</span>
+<span class="sd">    :type S: list | tuple | set</span>
+<span class="sd">    :return: True, if the partition is stable</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">S</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="n">O</span> <span class="o">=</span> <span class="n">compute_orbit_partition</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">geq</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">O</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">for</span> <span class="n">pi</span> <span class="ow">in</span> <span class="n">S</span><span class="p">:</span>
+        <span class="n">P_pi</span> <span class="o">=</span> <span class="p">[</span><span class="n">pi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">P</span><span class="p">]</span>  <span class="c1"># Apply pi on P</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">geq</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">P_pi</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="geq"><a class="viewcode-back" href="../content.html#partitionstability.geq">[docs]</a><span class="k">def</span> <span class="nf">geq</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if ``P`` is coarser than or equal to ``Q``.</span>
+<span class="sd">    Both, equality and coarseness are up to label isomorphism, i.e. partitions [0, 0, 1] and [3, 3, 7] are equal.</span>
+<span class="sd">    A partition ``P`` is coarser than a partition ``Q`` if each cluster in ``Q`` is a subset of a cluster in ``P``.</span>
+
+<span class="sd">    Data representation is:</span>
+<span class="sd">     * Partition ``P``: array-like, i.e. ``P[i]`` corresponds to the (arbitrary) cluster id of node ``i``</span>
+
+<span class="sd">    Usage:</span>
+
+<span class="sd">    &gt;&gt;&gt; P = [0,0,0,1,1,1]</span>
+<span class="sd">    &gt;&gt;&gt; P_prime = [1,1,1,0,0,0]</span>
+<span class="sd">    &gt;&gt;&gt; Q = [3,3,0,2,2,1]</span>
+<span class="sd">    &gt;&gt;&gt; R = [3,3,3,3,1,1]</span>
+<span class="sd">    &gt;&gt;&gt; assert geq(P, Q) == True</span>
+<span class="sd">    &gt;&gt;&gt; assert geq(P, P_prime) == True</span>
+<span class="sd">    &gt;&gt;&gt; assert geq(P, P_prime) == geq(P_prime, P)  # Cluster ids are arbitrary!</span>
+<span class="sd">    &gt;&gt;&gt; assert geq(P, R) == False</span>
+<span class="sd">    &gt;&gt;&gt; assert geq(R, P) == False</span>
+<span class="sd">    &gt;&gt;&gt; S = list(range(100))</span>
+<span class="sd">    &gt;&gt;&gt; from random import shuffle</span>
+<span class="sd">    &gt;&gt;&gt; shuffle(S)</span>
+<span class="sd">    &gt;&gt;&gt; assert geq(list(range(100)), S) == True</span>
+
+<span class="sd">    :param P: A partition in an array-like representation of node ids</span>
+<span class="sd">    :type P: list | tuple</span>
+<span class="sd">    :param Q: A partition in an array-like representation of node ids</span>
+<span class="sd">    :type Q: list | tuple</span>
+<span class="sd">    :return: True, if P &gt;= Q</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+    <span class="n">maps</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Save cluster ids from Q in P. Multiple clusters in Q can map to the same cluster id in P</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">maps</span><span class="p">:</span>  <span class="c1"># The orbit id in Q was already seen</span>
+            <span class="n">o_id</span> <span class="o">=</span> <span class="n">maps</span><span class="p">[</span><span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># The first occurrence of an orbit id is saved</span>
+            <span class="n">o_id</span> <span class="o">=</span> <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># The orbit id in P</span>
+            <span class="n">maps</span><span class="p">[</span><span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">o_id</span>  <span class="c1"># The orbit id in Q maps to the one in P</span>
+
+        <span class="k">if</span> <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">o_id</span><span class="p">:</span>  <span class="c1"># The orbit ids must match</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="kc">True</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Fabian Ball.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

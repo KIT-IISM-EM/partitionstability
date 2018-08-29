@@ -1,0 +1,300 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>partitionstability &#8212; Partition stability b documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to Partition stability’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-partitionstability">
+<span id="partitionstability"></span><h1>partitionstability<a class="headerlink" href="#module-partitionstability" title="Permalink to this headline">¶</a></h1>
+<p>Implementation of Algorithms 1 and 4 of <a class="reference internal" href="index.html#ball2018" id="id1">[Ball2018]</a></p>
+<dl class="function">
+<dt id="partitionstability.geq">
+<code class="descclassname">partitionstability.</code><code class="descname">geq</code><span class="sig-paren">(</span><em>P</em>, <em>Q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/partitionstability.html#geq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#partitionstability.geq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if <code class="docutils literal"><span class="pre">P</span></code> is coarser than or equal to <code class="docutils literal"><span class="pre">Q</span></code>.
+Both, equality and coarseness are up to label isomorphism, i.e. partitions [0, 0, 1] and [3, 3, 7] are equal.
+A partition <code class="docutils literal"><span class="pre">P</span></code> is coarser than a partition <code class="docutils literal"><span class="pre">Q</span></code> if each cluster in <code class="docutils literal"><span class="pre">Q</span></code> is a subset of a cluster in <code class="docutils literal"><span class="pre">P</span></code>.</p>
+<dl class="docutils">
+<dt>Data representation is:</dt>
+<dd><ul class="first last simple">
+<li>Partition <code class="docutils literal"><span class="pre">P</span></code>: array-like, i.e. <code class="docutils literal"><span class="pre">P[i]</span></code> corresponds to the (arbitrary) cluster id of node <code class="docutils literal"><span class="pre">i</span></code></li>
+</ul>
+</dd>
+</dl>
+<p>Usage:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">P</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">P_prime</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">geq</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">geq</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">P_prime</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">geq</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">P_prime</span><span class="p">)</span> <span class="o">==</span> <span class="n">geq</span><span class="p">(</span><span class="n">P_prime</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>  <span class="c1"># Cluster ids are arbitrary!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">geq</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">geq</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">random</span> <span class="k">import</span> <span class="n">shuffle</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shuffle</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">geq</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)),</span> <span class="n">S</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>P</strong> (<em>list | tuple</em>) – A partition in an array-like representation of node ids</li>
+<li><strong>Q</strong> (<em>list | tuple</em>) – A partition in an array-like representation of node ids</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True, if P &gt;= Q</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="partitionstability.test_stability">
+<code class="descclassname">partitionstability.</code><code class="descname">test_stability</code><span class="sig-paren">(</span><em>P</em>, <em>S</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/partitionstability.html#test_stability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#partitionstability.test_stability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test partition stability.</p>
+<p>Usage:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sparsepermutation</span> <span class="k">import</span> <span class="n">SparsePermutation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">=</span> <span class="n">SparsePermutation</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>  <span class="c1"># (0 1)(4 5)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">SparsePermutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>  <span class="c1"># (8 9)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p3</span> <span class="o">=</span> <span class="n">SparsePermutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>  <span class="c1"># (1 8)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="p">[</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">P</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">test_stability</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>P</strong> (<em>list | tuple</em>) – A partition in an array-like representation, clusters are identified by cluster ids</li>
+<li><strong>S</strong> (<em>list | tuple | set</em>) – A set of generators for a permutation group</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True, if the partition is stable</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-orbits">
+<span id="orbits"></span><h1>orbits<a class="headerlink" href="#module-orbits" title="Permalink to this headline">¶</a></h1>
+<p>Implementation of Algorithms 2 and 3 of <a class="reference internal" href="index.html#ball2018" id="id2">[Ball2018]</a></p>
+<dl class="function">
+<dt id="orbits.compute_orbit_partition">
+<code class="descclassname">orbits.</code><code class="descname">compute_orbit_partition</code><span class="sig-paren">(</span><em>S</em>, <em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbits.html#compute_orbit_partition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#orbits.compute_orbit_partition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Algorithm to compute the partition of orbits from a set of generators of the permutation group.</p>
+<p>Data representations are:
+* Permutation <code class="docutils literal"><span class="pre">pi</span></code>: array-like, i.e. <code class="docutils literal"><span class="pre">pi[i]</span></code> corresponds to <span class="math">\(i \mapsto i^\pi\)</span>, which MUST be hashable
+* Set of generators <code class="docutils literal"><span class="pre">S</span></code>: any container that is iterable repeatedly (e.g. <code class="docutils literal"><span class="pre">list</span></code> or <code class="docutils literal"><span class="pre">set</span></code>)
+* Partition <code class="docutils literal"><span class="pre">O</span></code>: array-like, i.e. <code class="docutils literal"><span class="pre">O[i]</span></code> corresponds to the (arbitrary) cluster id of node <code class="docutils literal"><span class="pre">i</span></code></p>
+<p>Besides the arbitrariness of cluster ids, this algorithm guarantees that <code class="docutils literal"><span class="pre">O[i]</span> <span class="pre">==</span> <span class="pre">i</span></code> if <code class="docutils literal"><span class="pre">i</span></code> is the smallest
+node id/label that is part of this cluster.</p>
+<p>Worst case time complexity is <span class="math">\(O(|S|\cdot n)\)</span>.</p>
+<p>Usage:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sparsepermutation</span> <span class="k">import</span> <span class="n">SparsePermutation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">=</span> <span class="n">SparsePermutation</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>  <span class="c1"># (0 1)(4 5)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">SparsePermutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>  <span class="c1"># (8 9)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p3</span> <span class="o">=</span> <span class="n">SparsePermutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>  <span class="c1"># (1 8)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">orbits</span> <span class="o">=</span> <span class="n">compute_orbit_partition</span><span class="p">([</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">],</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">orbits</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">orbits</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>S</strong> (<em>list | set | tuple</em>) – A bunch of generators for a permutation group</li>
+<li><strong>n</strong> (<em>int</em>) – The length of the set of elements the generated group acts on</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The partition of orbits of the permutation group</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sparsepermutation">
+<span id="sparsepermutation"></span><h1>sparsepermutation<a class="headerlink" href="#module-sparsepermutation" title="Permalink to this headline">¶</a></h1>
+<p>Simple implementation of a sparse permutation datastructure which is more efficient than
+saving permutation lists of length <code class="docutils literal"><span class="pre">n</span></code> each.</p>
+<dl class="class">
+<dt id="sparsepermutation.SparsePermutation">
+<em class="property">class </em><code class="descclassname">sparsepermutation.</code><code class="descname">SparsePermutation</code><span class="sig-paren">(</span><em>permutation_array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sparsepermutation.html#SparsePermutation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sparsepermutation.SparsePermutation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A minimal implementation of a sparse permutation that partly mimics the Permutation
+implementation of <code class="docutils literal"><span class="pre">sympy.combinatorics.Permutation</span></code>.</p>
+<p>Usage:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sparsepermutation</span> <span class="k">import</span> <span class="n">SparsePermutation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>  <span class="c1"># Permutation (2 3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sp</span> <span class="o">=</span> <span class="n">SparsePermutation</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>  <span class="c1"># Sparsify</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span>  <span class="c1"># Convert back to list</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">p</span> <span class="o">==</span> <span class="n">q</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="sparsepermutation.SparsePermutation.atoms">
+<code class="descname">atoms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sparsepermutation.html#SparsePermutation.atoms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sparsepermutation.SparsePermutation.atoms" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The set of elements</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">set</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sparsepermutation.SparsePermutation.length">
+<code class="descname">length</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sparsepermutation.html#SparsePermutation.length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sparsepermutation.SparsePermutation.length" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The number of affected elements</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sparsepermutation.SparsePermutation.size">
+<code class="descname">size</code><a class="headerlink" href="#sparsepermutation.SparsePermutation.size" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The number of elements the permutation acts on</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sparsepermutation.SparsePermutation.support">
+<code class="descname">support</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sparsepermutation.html#SparsePermutation.support"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sparsepermutation.SparsePermutation.support" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The list of affected elements</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Partition stability’s documentation!</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Fabian Ball.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/content.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
