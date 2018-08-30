@@ -1,0 +1,23 @@
+Package: partitionstability
+Type: Package
+Title: Provides Implementations of Algorithms Presented in the Article of Ball and 
+    Geyer-Schulz (2018)
+Version: 0.1
+Date: 2018-08-30
+Author: Fabian Ball [aut, cre, cph, ctb]
+Maintainer: Fabian Ball <fabian.ball@kit.edu>
+Description: Exemplary implementations of Algorithms 1 to 4 of Ball, F and Geyer-Schulz A
+    (2018) <doi:TBA> that can be used to test partition stability given a set of 
+    generators for a permutation group that acts on the partitioned set.
+    The implementations strongly relate to the pseudocode, which means there certainly 
+    exist ways to implement the algorithms more efficiently.
+    However, the main focus lies on supplying supplemental material for the cited article.
+License: MIT + file LICENSE
+Depends: R (>= 3.2.0)
+Authors@R: c(
+    person("Fabian", "Ball",, "fabian.ball@kit.edu", c("aut", "cre", "cph", "ctb"))
+    )
+RoxygenNote: 6.0.1
+RdMacros: Rdpack
+Imports: sets, Rdpack
+Suggests: testthat
