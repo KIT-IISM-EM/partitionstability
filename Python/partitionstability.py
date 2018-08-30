@@ -20,6 +20,8 @@ def test_stability(P, S):
     >>> S = [p1, p2, p3]
     >>> P = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     >>> assert test_stability(P, S) == True
+    >>> Q = [1, 1, 0, 0, 0, 0, 0, 0, 2, 2]
+    >>> assert test_stability(Q, S) == False
 
     :param P: A partition in an array-like representation, clusters are identified by cluster ids
     :type P: list | tuple
@@ -37,7 +39,7 @@ def test_stability(P, S):
         return True
 
     for pi in S:
-        P_pi = [pi[i] for i in P]  # Apply pi on P
+        P_pi = [P[pi[i]] for i in range(len(P))]  # Apply pi on P
         if not geq(P, P_pi):
             return False
 
@@ -74,7 +76,7 @@ def geq(P, Q):
     :type P: list | tuple
     :param Q: A partition in an array-like representation of node ids
     :type Q: list | tuple
-    :return: True, if P >= Q
+    :return: True, if :math:`P \geq Q`
     :rtype: bool
     """
     assert len(P) == len(Q)

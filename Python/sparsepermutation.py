@@ -26,6 +26,25 @@ class SparsePermutationArray(dict):
         else:
             super(SparsePermutationArray, self).__setitem__(key, value)
 
+    def __str__(self):
+        # Produce a nice cycle representation
+        keys = set(self.keys())
+        ret = ''
+
+        while keys:
+            k = min(keys)
+            keys.remove(k)
+            cycle = [k]
+            img_k = self[k]
+            while img_k != k:
+                cycle.append(img_k)
+                keys.remove(img_k)
+                img_k = self[img_k]
+
+            ret += '({})'.format(' '.join(map(str, cycle)))
+
+        return ret
+
 
 class SparsePermutation(object):
     """
@@ -55,6 +74,25 @@ class SparsePermutation(object):
                 self._perm[k] = v
                 self._support += 1  # Increase the support count of the permutation
 
+    def __call__(self, *args):
+        """
+        Convenient application of this permutation.
+        """
+        if len(args) == 1:
+            arg = args[0]
+            if isinstance(arg, int):  # Return the image
+                return self[arg]
+            else:  # Assume an iterable that is indexable, e.g. a list
+                try:
+                    t = type(arg)
+                    return t([arg[self[i]] for i in range(len(arg))])
+                except TypeError:
+                    raise TypeError('The argument must be iterable and indexable')
+        elif len(args) > 1:  # Apply permutation on every argument
+            return tuple(self(arg) for arg in args)
+        else:
+            raise TypeError('No argument given')
+
     def __getitem__(self, item):
         if item >= self._n:
             raise KeyError(item)
@@ -67,6 +105,9 @@ class SparsePermutation(object):
 
     def __hash__(self):
         return hash(tuple(self))
+
+    def __str__(self):
+        return str(self._perm)
 
     #############
     # sympy.combinatorics.Permutation mimics
