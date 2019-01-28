@@ -15,4 +15,4 @@ The documentation for the R code can be found under in the directory [R/partitio
  
 ## References
 <a id="ref" href="#text">Ball and Geyer-Schulz (2018)</a>:
-> Ball, Fabian and Geyer-Schulz, Andreas (2018), “Symmetry-based Graph Clustering Partition Stability”, Archives of Datascience Series A <vol tba>(<nr tba>), DOI: <doi tba>
+> Ball, Fabian and Geyer-Schulz, Andreas (2018), “Symmetry-based Graph Clustering Partition Stability”, Archives of Datascience, Series A 4(1), DOI: 10.5445/KSP/1000085951/01
